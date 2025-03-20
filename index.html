@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta author="vivek singh" description="this is my first chat application">
+
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" href="assets/css/fontawesome.css">
+    <link rel="stylesheet" href="assets/css/customStyle.css">
+
+    <title>Vivek|ChatSkoot</title>
+    <link rel="icon" type="image/x-icon" href="assets/images/newcht.png">
+</head>
+<body onload="initializeFirebase()">
+    <span class="topMargin"></span>
+
+    <div class="container-fluid bg-white shadow-lg chatRoom">
+        <div class="row h-100">
+            <div class="col-md-4 p-0 d-none d-md-block" id="side-1">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-7 col-sm-7 col-md-7 ">
+                                <img src="assets/images/logo/userThumb2.png" class="rounded-circle" id="user_profile" alt="User-Logo" height="40px" width="40px">
+                            </div>
+                            <div class="col-1 col-sm-1 col-md-1" style="cursor: pointer;">
+                                <i class="fa-solid fa-circle-left d-md-none" onclick="hide_chat()"></i>
+                            </div>
+                            <div class="col-2 col-sm-2 col-md-2" style="cursor: pointer;">
+                                <div class="" data-bs-toggle="modal" data-bs-target="#notificationModal" onclick="getAllNotification()">
+                                    <i class="fa-solid fa-bell fs-4 text-muted"></i>
+                                    <span class="position-absolute mt-1 translate-middle badge rounded-circle bg-danger" id="notiCounter" style="font-size: 12px;">
+                                        0
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-2 col-sm-2 col-md-2" style="cursor: pointer;">
+                                <div class="dropdown">
+                                    <span class="dropdown-toggle" data-bs-toggle="dropdown">
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </span>
+                                    <div class="dropdown-menu">
+                                      <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#allUserList" onclick="fetchUserList()">Find Friend</a>
+
+                                      <!-- <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#frndList" onclick="fetchFrndList()">New Chat</a> -->
+
+                                      <a class="dropdown-item" onclick="signIn()" id="signInBtn">Sign In</a>
+                                      <hr class="dropdown-divider">
+                                      <a class="dropdown-item" onclick="signOut()" id="signOutBtn">Sign Out</a>
+                                    </div>
+                                  </div>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="list-group list-group-flush" id="loadFrndLists" style="cursor: pointer;">
+                       
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-8 p-0" id="side-2">
+                <div class="card" id="chatPanel" style="display: none;">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-1 col-sm-1 col-md-1">
+                                <i class="fa-solid fa-list" onclick="show_chat()" style="cursor: pointer;"></i>
+                            </div>
+                            <div class="col-2 col-sm-2 col-md-2 col-lg-1">
+                                <img src="assets/images/logo/userThumb2.png" id="frndPhoto" class="rounded-circle" alt="User-Logo" height="40px" width="40px">
+                            </div>
+                            <div class="col-5 col-sm-5 col-md-5 col-lg-7">
+                                <div class="user-name" id="frndName">Vivek Singh</div>
+                                <!-- <div class="user-text" >last seen: <span id="frndLastSeen">11 Aug 2027</span></div> -->
+                            </div>
+                            <div class="col-4 col-sm-4 col-md-4 col-lg-3 text-secondary">
+                                <i class="fa-solid fa-magnifying-glass" style="cursor: pointer;"></i>
+                                <!-- <i class="fa-solid fa-paperclip clickIcons"></i> -->
+
+                                <span class="dropdown">
+                                    <span class="dropdown-toggle" data-bs-toggle="dropdown">
+                                        <i class="fa-solid fa-paperclip clickIcons"></i>
+                                    </span>
+                                    <div class="dropdown-menu" style="cursor: pointer;">
+                                        <a class="dropdown-item" onclick="chooseImage()">
+                                            Image
+                                            <input type="file" id="fileUpload" accept="image/*" onchange="sendImage(this)" style="display: none;">
+                                        </a>
+                                        <a class="dropdown-item">Documents</a>
+                                        <a class="dropdown-item" onclick="chooseVideo()">
+                                            Video
+                                        <a class="dropdown-item" onclick="openCamera()">Camera</a>
+                                    </div>
+                                  </span>
+
+                                <i class="fa-solid fa-ellipsis-vertical clickIcons"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body" id="msgBox"></div>
+
+                    <!-- Replace the existing card-footer div with this updated version -->
+                    <div class="card-footer">
+                        <div class="row mainSmilyDiv" style="position: relative;">
+                            <div class="col-md-8 p-2 shadow-lg emojiBox tabpanel1" id="smileyBox" style="height: 190px; display: none;">
+                                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                    <li class="nav-item">
+                                    <button class="nav-link active" id="pills-smiley-tab" data-bs-toggle="pill" data-bs-target="#pills-smiley" role="tab" aria-controls="pills-smiley" aria-selected="true">
+                                        <i class="fa-regular fa-face-smile"></i></button>
+                                    </li>
+                            
+                                    <li class="nav-item">
+                                    <button class="nav-link" id="pills-flag-tab" data-bs-toggle="pill" data-bs-target="#pills-flag" role="tab" aria-controls="pills-flag" aria-selected="false"><i class="fa-regular fa-flag"></i></button>
+                                    </li>
+                                </ul>
+
+                                <div class="tab-content p-2" id="pills-tabContent">
+                                    <div class="tab-pane fade show active" id="pills-smiley" role="tabpanel" aria-labelledby="pills-smiley-tab"></div>
+                                    <div class="tab-pane fade" id="pills-flag" role="tabpanel" aria-labelledby="pills-flag-tab"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-2 col-md-1 text-secondary fs-5">
+                                <i class="fa-regular fa-face-smile"></i>
+                            </div>
+                            <div class="col-8 col-md-10 p-3">
+                                <input type="text" class="form-control rounded-pill" id="textMsg" onkeyup="changeSendIcon(this)" onfocus="hideSmilyPanel()" placeholder="Type here.." required>
+                                <input type="file" id="videoUpload" accept="video/*" onchange="sendVideo(this)" style="display: none;">
+                            </div>
+                            <div class="col-2 col-md-1 text-secondary fs-5" style="cursor: pointer;">
+                                <i class="fa fa-microphone" id="audioMic" onclick="recordStart(this)"></i>
+                                <i class="fa fa-paper-plane" id="send" onclick="sendTextMsg()" style="display: none;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card h-100 bg-gradient" id="theme_card">
+                    <div class="card-body" id="chatTheme">
+                        <button class="badge btn-warning d-md-none" onclick="show_chat()">Start Chat</button>
+                        
+                        <img src="assets/images/newcht.png" class="chatImg" alt="Theme">
+                        <!-- <h2 class="text-center text-block">Library Of Liberty</h2>
+                        <h1 class="text-center text-block-bottom">LoL</h1> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- All UsersList Modal -->
+    <div class="modal fade" id="allUserList">
+        <div class="modal-dialog">
+          <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title text-muted">All Users</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group list-group-flush" id="UrsList" style="cursor: pointer;">
+                        
+                    </ul>
+                </div>
+          </div>
+        </div>
+    </div>
+
+     <!-- Notification Modal -->
+     <div class="modal fade" id="notificationModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title text-muted">All Notifications</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group list-group-flush" id="notify" style="cursor: pointer;">
+                        
+                    </ul>
+                </div>
+          </div>
+        </div>
+    </div>
+
+      <!-- FrndList Modal -->
+      <!-- <div class="modal fade" id="frndList">
+        <div class="modal-dialog">
+          <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title">Friends List</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group list-group-flush" id="UlList" style="cursor: pointer;">
+                        
+                    </ul>
+                </div>
+          </div>
+        </div>
+    </div> -->
+
+
+    
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/8.2.2/firebase.min.js"></script> -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-messaging.js"></script>
+    <!-- <script src="assets/js/firebase-messaging.js"></script> -->
+    <script src="assets/js/firebase_config.js"></script>
+    <script src="assets/js/custom.js"></script>
+    <script src="assets/js/jQuery.js"></script>
+    
+    <script src="assets/js/bootstrap.js"></script>
+    <script src="assets/js/fontawesome.js"></script>
+    <script src="assets/js/sweetAlert.js"></script>
+    
+</body>
+</html>

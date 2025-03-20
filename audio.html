@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" href="assets/css/customStyle.css">
+
+    <title>Audio Message</title>
+</head>
+<body>
+    <div class="container-fluid bg-white shadow-lg chatRoom">
+        <h3 class="text-center py-3">Audio Recorder</h3><hr>
+        <div class="container text-center">
+            <audio class="mt-4" id="audio" controls></audio>
+        </div>
+    </div>
+
+   
+    <script src="assets/js/jQuery.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
+    <script src="assets/js/custom.js"></script>
+
+    <script>
+        let device = navigator.mediaDevices.getUserMedia({audio:true});
+        let chunk = [];
+        let recorder;
+
+        device.then((stream)=> {
+            recorder = new MediaRecorder(stream);
+            recorder.ondataavailable = e => {
+                chunk.push(e.data);
+
+                if (recorder.state == 'inactive') {
+                    let blob = new Blob(chunk, {type:'audio/webm'});
+                    document.getElementById('audio').innerHTML = '<source src="'+URL.createObjectURL(blob)+'" type="audio/webm" />'
+                }
+            }
+            recorder.start(1000);
+        });
+
+        setTimeout(()=>{
+            recorder.stop();
+        }, 8000);
+
+
+    </script>
+    
+</body>
+</html>
