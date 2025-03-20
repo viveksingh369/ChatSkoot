@@ -1,11 +1,11 @@
 const firebaseConfig = {
-  apiKey: process.env.VITE_API_KEY || "AIzaSyA5iIDK9NIuAQ3bLXs8FSxVMJv9GHb06K4",
+  apiKey: "AIzaSyA5iIDK9NIuAQ3bLXs8FSxVMJv9GHb06K4",
   authDomain: "chatskoot-fb294.firebaseapp.com",
   databaseURL: "https://chatskoot-fb294-default-rtdb.firebaseio.com",
   projectId: "chatskoot-fb294",
   storageBucket: "chatskoot-fb294.appspot.com",
   messagingSenderId: "688133918379",
-  appId: process.env.VITE_APP_KEY || "1:688133918379:web:80fee1ea0c19ce934f31ee"
+  appId: "1:688133918379:web:80fee1ea0c19ce934f31ee"
 };
 
 
