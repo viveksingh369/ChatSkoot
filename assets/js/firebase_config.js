@@ -1,6 +1,3 @@
-import dotenv from 'dotenv';
-dotenv.config();
-
 const firebaseConfig = {
   apiKey: process.env.API_KEY,
   authDomain: "chatskoot-fb294.firebaseapp.com",

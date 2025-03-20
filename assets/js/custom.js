@@ -2,6 +2,11 @@
 var currentUser = '';
 var chatKey = '';
 
+
+document.addEventListener('DOMContentLoaded', () => {
+    initializeFirebase();
+});
+
 document.addEventListener('keydown', function(key){
     if (key.which === 13) {
         sendTextMsg();
