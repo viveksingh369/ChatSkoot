@@ -1,6 +1,9 @@
 importScripts('https://www.gstatic.com/firebasejs/7.14.0/firebase.js');
 importScripts('https://www.gstatic.com/firebasejs/7.14.0/firebase-messaging.js');
 importScripts('https://www.gstatic.com/firebasejs/7.14.0/init.js');
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 // importScripts('https://www.gstatic.com/firebasejs/7.14.0/init.js');
 
@@ -11,16 +14,17 @@ importScripts('https://www.gstatic.com/firebasejs/7.14.0/init.js');
 //   }
 // }
 
-chrome://flags/#cross-origin-opener-policy
+// chrome://flags/#cross-origin-opener-policy
+
 
 var firebaseConfig = {
-  apiKey: "AIzaSyA5iIDK9NIuAQ3bLXs8FSxVMJv9GHb06K4",
+  apiKey: process.env.API_KEY,
   authDomain: "chatskoot-fb294.firebaseapp.com",
   databaseURL: "https://chatskoot-fb294-default-rtdb.firebaseio.com",
   projectId: "chatskoot-fb294",
   storageBucket: "chatskoot-fb294.appspot.com",
   messagingSenderId: "688133918379",
-  appId: "1:688133918379:web:80fee1ea0c19ce934f31ee"
+  appId: process.env.APP_KEY
 };
 
 firebase.initializeApp(firebaseConfig);
