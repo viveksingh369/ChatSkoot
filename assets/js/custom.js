@@ -706,12 +706,15 @@ function addMessageToChat(message, isFromMe) {
 
 // Initialize when Firebase auth state changes
 firebase.auth().onAuthStateChanged(function(user) {
-    if(user) {
-        currentUser = user.uid;
-        loadFrndList();
-        notificationCounter();
+    if (user) {
+      currentUser = user.uid;
+      loadFrndList();
+      notificationCounter();
+    } else {
+      console.log("No user is signed in.");
+      alert("No user is signed in.");
     }
-});
+  });
 
 
 
