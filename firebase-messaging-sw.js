@@ -11,7 +11,7 @@ importScripts('https://www.gstatic.com/firebasejs/7.14.0/init.js');
 //   }
 // }
 
-// chrome://flags/#cross-origin-opener-policy
+chrome://flags/#cross-origin-opener-policy
 
 
 var firebaseConfig = {
