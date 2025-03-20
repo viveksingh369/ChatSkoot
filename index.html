@@ -215,6 +215,16 @@
     <script src="assets/js/bootstrap.js"></script>
     <script src="assets/js/fontawesome.js"></script>
     <script src="assets/js/sweetAlert.js"></script>
+
+    <script>
+        window.onload = function () {
+          if (typeof initializeFirebase === 'function') {
+            initializeFirebase();
+          } else {
+            console.error('initializeFirebase is not defined. Check script loading order.');
+          }
+        };
+      </script>
     
 </body>
 </html>

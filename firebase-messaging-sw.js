@@ -15,13 +15,13 @@ importScripts('https://www.gstatic.com/firebasejs/7.14.0/init.js');
 
 
 var firebaseConfig = {
-  apiKey: process.env.API_KEY,
+  apiKey: import.meta.env.API_KEY,
   authDomain: "chatskoot-fb294.firebaseapp.com",
   databaseURL: "https://chatskoot-fb294-default-rtdb.firebaseio.com",
   projectId: "chatskoot-fb294",
   storageBucket: "chatskoot-fb294.appspot.com",
   messagingSenderId: "688133918379",
-  appId: process.env.APP_KEY
+  appId: import.meta.env.APP_KEY
 };
 
 firebase.initializeApp(firebaseConfig);
